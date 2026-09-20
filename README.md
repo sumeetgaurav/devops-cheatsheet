@@ -8,7 +8,7 @@ A growing collection of concise, example-driven reference guides for common DevO
 |---|---|
 | [Git](Git.md) | Configuration, branching, merging, rebasing, remotes, history, stashing, tagging, and more |
 | Docker | *Coming soon* |
-| Kubernetes | *Coming soon* |
+| [Kubernetes](<kubernetes cheat-sheet/kubernetes.md>) | Fundamentals, and [architecture](<kubernetes cheat-sheet/kubernetes-architecture.md>) — control plane, data plane, and how a request flows through the cluster |
 | CI/CD | *Coming soon* |
 | Linux / Shell Scripting | *Coming soon* |
 | Cloud (AWS / Azure / GCP) | *Coming soon* |
