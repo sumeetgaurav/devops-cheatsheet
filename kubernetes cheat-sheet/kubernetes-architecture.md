@@ -41,12 +41,12 @@ flowchart LR
             W7["W7"]
             W8["W8"]
         end
-        KUBELET --> WN
-        PROXY --> WN
+        KUBELET <--> WN
+        PROXY <--> WN
     end
 
     API <--> KUBELET
-    USER["👤 User"] --> PROXY
+    USER["👤 User"] <--> PROXY
 
     style CP fill:#1f6feb,color:#ffffff,stroke:#0d419d
     style DP fill:#2ea043,color:#ffffff,stroke:#1a7f37
