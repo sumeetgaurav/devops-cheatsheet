@@ -26,7 +26,21 @@ The whole point of Kubernetes is to manage **Pods**. Everything else — Namespa
 
 Here's how these pieces fit together inside a cluster:
 
-![Kubernetes cluster architecture: Namespace, Pod, Deployment/StatefulSet and Service](image-3.png)
+```mermaid
+flowchart TB
+    U["User"] --> NS
+    subgraph NS["Namespace — logical group of resources"]
+        SVC["Service — routes traffic in"]
+        DEP["Deployment — stateless pods"]
+        SS["StatefulSet — e.g. database"]
+        PODS1["Pods"]
+        PODS2["Pods"]
+        SVC --> DEP
+        SVC --> SS
+        DEP --> PODS1
+        SS --> PODS2
+    end
+```
 
 ## 3. Labels & Selectors — How a Deployment Finds "Its" Pods
 
@@ -39,8 +53,6 @@ A Deployment doesn't track pods by name — it uses labels:
 ## 4. Services — The 5 Types
 
 Since Pods are disposable and their IPs change constantly, a Service gives you one stable address. Kubernetes offers a few flavors of it:
-
-![Kubernetes Service types](image-4.png)
 
 | Service Type | What It Does |
 |---|---|

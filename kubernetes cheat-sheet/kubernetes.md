@@ -4,7 +4,11 @@
 
 The basic building blocks are:
 
-![Monolith vs microservices](image.png)
+| | Monolith | Microservices | Monorepo |
+|---|---|---|---|
+| **What it is** | The whole app is built as one unit | The app is split into many small, independent parts | One GitHub repository that holds all the microservices |
+| **Effort** | Easiest to manage of the three | Needs Kubernetes to manage properly | Just a code organisation choice |
+| **Your examples** | Resume reviewer (takes a resume, gives an ATS score); portfolio website | E-commerce app (many moving parts); ChatGPT (image generation, voice generation, model selection) | Microservices stored together in one repo |
 
 The rule of thumb from the diagram above: a simple app with one job is a **monolith**, and an app with many different moving parts is **microservices**. Microservices are generally deployed on Kubernetes.
 
@@ -25,7 +29,25 @@ A **server** is a machine that runs your containers, using Docker or alternative
 
 The diagram below shows how these pieces fit together.
 
-![Servers and clusters](image-1.png)
+```mermaid
+flowchart TB
+    subgraph CLUSTER["Cluster: a group of servers"]
+        subgraph S1["Server 1 — RAM · CPU · Disk"]
+            C1A["Container = Linux process"]
+            C1B["Container = Linux process"]
+        end
+        subgraph S2["Server 2 — RAM · CPU · Disk"]
+            C2A["Container = Linux process"]
+            C2B["Container = Linux process"]
+        end
+        subgraph S3["Server 3 — RAM · CPU · Disk"]
+            C3A["Container = Linux process"]
+            C3B["Container = Linux process"]
+        end
+    end
+```
+
+> Server = instance = node = worker = host = VM
 
 ## Key Terms
 

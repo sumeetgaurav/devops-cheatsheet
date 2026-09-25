@@ -11,8 +11,6 @@ A Kubernetes cluster is like a company:
 - 🔵 **Control plane** — the headquarters that makes decisions.
 - 🟢 **Data plane** — the workplace where the real work happens.
 
-![Kubernetes architecture overview](image-2.png)
-
 The control plane manages the cluster's **desired state** — what you've asked Kubernetes to maintain, e.g. *"Run three copies of my website."*
 
 ```mermaid
