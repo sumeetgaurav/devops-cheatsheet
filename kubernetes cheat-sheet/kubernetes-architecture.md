@@ -23,21 +23,29 @@ flowchart LR
         SCHED["Scheduler"]
         CM["Controller Manager"]
         API <--> ETCD
-        API --> SCHED
-        API --> CM
+        API <--> SCHED
+        API <--> CM
     end
 
     subgraph DP["🟢 Data Plane"]
-        subgraph WN["Worker Node"]
-            KUBELET["Kubelet"]
-            PROXY["Kube-proxy"]
-            POD(("Pods"))
-            KUBELET --> POD
-            PROXY --> POD
+        KUBELET["Kubelet"]
+        PROXY["Kube-proxy"]
+        subgraph WN["Worker Nodes (run containers)"]
+            direction LR
+            W1["W1"]
+            W2["W2"]
+            W3["W3"]
+            W4["W4"]
+            W5["W5"]
+            W6["W6"]
+            W7["W7"]
+            W8["W8"]
         end
+        KUBELET --> WN
+        PROXY --> WN
     end
 
-    API --> KUBELET
+    API <--> KUBELET
     USER["👤 User"] --> PROXY
 
     style CP fill:#1f6feb,color:#ffffff,stroke:#0d419d
