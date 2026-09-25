@@ -54,51 +54,61 @@ Since Pods are disposable and their IPs change constantly, a Service gives you o
 
 ### 5.1 Project Setup
 
-![Project setup commands](image-5.png)
-
-### 5.2 Frontend Deployment, Scaling & Inspecting
-
-![Frontend deployment and scaling commands](image-6.png)
-
-### 5.3 Inspecting Pods, Frontend Service & Backend Deployment
-
-![Pod inspection, service and backend deployment commands](image-7.png)
-
-### 5.4 Secrets
-
-![Secrets commands](image-8.png)
-
-### 5.5 ConfigMap and Final Backend Update
-
-![ConfigMap commands](image-9.png)
-
-### Command Summary
-
-| Step | Command | Purpose |
+| # | Command | What It Does |
 |---|---|---|
 | 1 | `cd devboard` | Changes into the `devboard` project folder that holds all the YAML files. |
-| 1 | `ls` | Lists the files in the current folder so you can confirm which YAML files exist. |
-| 2 | `nano 03-frontend-deployment.yml` | Opens the frontend Deployment manifest in the nano editor to create or change it (image, replicas, labels, ports). |
-| 2 | `kubectl apply -f 03-frontend-deployment.yml` | Creates the frontend Deployment, or updates it if it already exists, from the YAML file. Re-run after every edit. |
-| 2 | `kubectl get pods -n devboard-ns` | Lists the pods in the `devboard-ns` namespace with their status, restarts and age. Used to check the result of each apply or scale. |
-| 2 | `kubectl delete -f 02-frontend-pod.yml` | Deletes the standalone pod defined in `02-frontend-pod.yml`, since the Deployment now manages the frontend pods. |
-| 3 | `kubectl scale deployment/frontend-deployment -n devboard-ns --replicas=10` | Scales the frontend Deployment to 10 pod replicas. |
-| 3 | `kubectl scale deployment/frontend-deployment -n devboard-ns --replicas=50` | Scales the frontend Deployment up to 50 replicas to test large-scale scaling. |
-| 3 | `kubectl scale deployment/frontend-deployment -n devboard-ns --replicas=5` | Scales the frontend Deployment back down to 5 replicas. |
-| 3 | `kubectl describe pod/frontend-deployment-85b8cf9c69-5rndh -n devboard-ns` | Shows detailed information about one pod: node, IP, containers, environment and recent events. Useful for troubleshooting. |
-| 4 | `nano 04-frontend-service.yml` | Opens or creates the Service manifest that exposes the frontend pods. |
-| 4 | `kubectl apply -f 04-frontend-service.yml` | Creates or updates the frontend Service so the pods get a stable network endpoint. |
-| 4 | `kubectl get all -n devboard-ns` | Shows all main resources in the namespace (pods, services, deployments, replica sets) at once. |
-| 5 | `cp 03-frontend-deployment.yml 05-backend-deployment.yml` | Copies the frontend Deployment file to use as a template for the backend. |
-| 5 | `nano 05-backend-deployment.yml` | Edits the copy: change the name, labels, image and port so it describes the backend. |
-| 5 | `kubectl apply -f 05-backend-deployment.yml` | Creates or updates the backend Deployment. Re-run after each edit. |
-| 6 | `nano 06-secrets.yml` | Creates or edits the Secret manifest that stores sensitive values such as passwords or API keys. |
-| 6 | `kubectl apply -f 06-secrets.yml` | Creates or updates the Secret in the cluster. |
-| 6 | `kubectl get secret -n devboard-ns` | Lists the Secrets in the namespace (values are not shown). |
-| 6 | `cat 06-secrets.yml` | Prints the Secret file to the terminal to review its contents. Values are only base64-encoded, not encrypted. |
-| 7 | `nano 07-configmap.yml` | Creates or edits the ConfigMap manifest that holds non-sensitive configuration. |
-| 7 | `cat 07-configmap.yml` | Prints the ConfigMap file to check its contents. |
-| 7 | `kubectl apply -f 06-secrets.yml -f 07-configmap.yml` | Applies the Secret and the ConfigMap together in one command. |
-| 7 | `kubectl get cm -n devboard-ns` | Lists the ConfigMaps in the namespace (`cm` is the short name for `configmap`). |
-| 7 | `kubectl apply -f 07-configmap.yml` | Applies the ConfigMap again after changes to it. |
-| 7 | `nano 05-backend-deployment.yml` → `kubectl apply -f 05-backend-deployment.yml` | Edits the backend Deployment to read values from the Secret and ConfigMap, then applies it. Check the result with `kubectl get pods -n devboard-ns`. |
+| 2 | `ls` | Lists the files in the current folder so you can confirm which YAML files exist. |
+
+### 5.2 Frontend Deployment
+
+| # | Command | What It Does |
+|---|---|---|
+| 3 | `nano 03-frontend-deployment.yml` | Opens the frontend Deployment manifest in the nano editor to create or change it (image, replicas, labels, ports). |
+| 4 | `kubectl apply -f 03-frontend-deployment.yml` | Creates the frontend Deployment, or updates it if it already exists, from the YAML file. Re-run after every edit. |
+| 5 | `kubectl get pods -n devboard-ns` | Lists the pods in the `devboard-ns` namespace with their status, restarts and age. Used to check the result of each apply or scale. |
+| 6 | `kubectl delete -f 02-frontend-pod.yml` | Deletes the standalone pod defined in `02-frontend-pod.yml`, since the Deployment now manages the frontend pods. |
+
+### 5.3 Scaling and Inspecting
+
+| # | Command | What It Does |
+|---|---|---|
+| 7 | `kubectl scale deployment/frontend-deployment -n devboard-ns --replicas=10` | Scales the frontend Deployment to 10 pod replicas. |
+| 8 | `kubectl scale deployment/frontend-deployment -n devboard-ns --replicas=50` | Scales the frontend Deployment up to 50 replicas to test large-scale scaling. |
+| 9 | `kubectl scale deployment/frontend-deployment -n devboard-ns --replicas=5` | Scales the frontend Deployment back down to 5 replicas. |
+| 10 | `kubectl describe pod/frontend-deployment-85b8cf9c69-5rndh -n devboard-ns` | Shows detailed information about one pod: node, IP, containers, environment and recent events. Useful for troubleshooting. |
+
+### 5.4 Frontend Service
+
+| # | Command | What It Does |
+|---|---|---|
+| 11 | `nano 04-frontend-service.yml` | Opens or creates the Service manifest that exposes the frontend pods. |
+| 12 | `kubectl apply -f 04-frontend-service.yml` | Creates or updates the frontend Service so the pods get a stable network endpoint. |
+| 13 | `kubectl get all -n devboard-ns` | Shows all main resources in the namespace (pods, services, deployments, replica sets) at once. |
+
+### 5.5 Backend Deployment
+
+| # | Command | What It Does |
+|---|---|---|
+| 14 | `cp 03-frontend-deployment.yml 05-backend-deployment.yml` | Copies the frontend Deployment file to use as a template for the backend. |
+| 15 | `nano 05-backend-deployment.yml` | Edits the copy: change the name, labels, image and port so it describes the backend. |
+| 16 | `kubectl apply -f 05-backend-deployment.yml` | Creates or updates the backend Deployment. Re-run after each edit. |
+
+### 5.6 Secrets
+
+| # | Command | What It Does |
+|---|---|---|
+| 17 | `nano 06-secrets.yml` | Creates or edits the Secret manifest that stores sensitive values such as passwords or API keys. |
+| 18 | `kubectl apply -f 06-secrets.yml` | Creates or updates the Secret in the cluster. |
+| 19 | `kubectl get secret -n devboard-ns` | Lists the Secrets in the namespace (values are not shown). |
+| 20 | `cat 06-secrets.yml` | Prints the Secret file to the terminal to review its contents. Values are only base64-encoded, not encrypted. |
+
+### 5.7 ConfigMap and Final Backend Update
+
+| # | Command | What It Does |
+|---|---|---|
+| 21 | `nano 07-configmap.yml` | Creates or edits the ConfigMap manifest that holds non-sensitive configuration. |
+| 22 | `cat 07-configmap.yml` | Prints the ConfigMap file to check its contents. |
+| 23 | `kubectl apply -f 06-secrets.yml -f 07-configmap.yml` | Applies the Secret and the ConfigMap together in one command. |
+| 24 | `kubectl get cm -n devboard-ns` | Lists the ConfigMaps in the namespace (`cm` is the short name for `configmap`). |
+| 25 | `kubectl apply -f 07-configmap.yml` | Applies the ConfigMap again after changes to it. |
+| 26 | `nano 05-backend-deployment.yml` → `kubectl apply -f 05-backend-deployment.yml` | Edits the backend Deployment to read values from the Secret and ConfigMap, then applies it. Check the result with `kubectl get pods -n devboard-ns`. |
